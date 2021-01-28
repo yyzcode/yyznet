@@ -12,7 +12,7 @@ type Tcp struct {
 	Port      int
 	conn      net.Conn
 	Status    int //状态0连接中，状态1连接成功，状态2已断开
-	Protocol  protocol.Tcp
+	Protocol  protocol.Transport
 	OnConnect func()
 	OnMessage func([]byte)
 	OnClose   func()
@@ -21,8 +21,12 @@ type Tcp struct {
 var TcpWg sync.WaitGroup
 
 func (t *Tcp) Exec() {
+	if t.Protocol == nil{
+		t.Protocol = protocol.Tcp{}
+	}
 	var err error
 	t.conn, err = net.Dial("tcp", fmt.Sprintf("%s:%d", t.Addr, t.Port))
+	defer t.conn.Close()
 	TcpWg.Done()
 	if err != nil {
 		t.Status = 2

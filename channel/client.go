@@ -6,6 +6,7 @@ import (
 	"github.com/yyzcoder/yyznet/protocol"
 	"net"
 	"sync"
+	"time"
 )
 
 type Client struct {
@@ -150,7 +151,7 @@ func (c *Client) reconnect() {
 	c.status = 2
 RECONNECT:
 	fmt.Println("正在重新连接隧道")
-	fmt.Println(c.subStatus)
+	time.Sleep(time.Second*5)//5s重连一次
 	c.conn, err = net.Dial("tcp", fmt.Sprintf("%s:%d", c.ChannelAddr, c.ChannelPort))
 	if err != nil {
 		goto RECONNECT

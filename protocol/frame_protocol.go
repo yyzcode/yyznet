@@ -11,9 +11,8 @@ type Frame struct {
 
 //读取一个协议数据包
 func (f Frame) ReadOnePkg(conn *net.Conn) (pkg []byte, err error) {
-	parser := Frame{}
 	//先读包头长度
-	pkgLen, err := parser.readPkgLen(conn)
+	pkgLen, err := f.readPkgLen(conn)
 	if err != nil {
 		return
 	}
