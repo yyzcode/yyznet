@@ -1,3 +1,3 @@
-module github.com/yyzcoder/yyznet
+module github.com/yyzcode/yyznet
 
 go 1.15

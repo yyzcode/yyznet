@@ -3,7 +3,7 @@ package channel
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/yyzcoder/yyznet/protocol"
+	"github.com/yyzcode/yyznet/protocol"
 	"net"
 	"sync"
 	"time"
@@ -12,7 +12,7 @@ import (
 type Client struct {
 	ChannelAddr string
 	ChannelPort int
-	WaitRun sync.WaitGroup
+	WaitRun     sync.WaitGroup
 	protocol    protocol.Transport
 	status      int8
 	conn        net.Conn
@@ -23,7 +23,7 @@ type Client struct {
 //运行client
 func (c *Client) Run() {
 	c.WaitRun.Add(1)
-	c.protocol = protocol.Frame{}//使用frame协议
+	c.protocol = protocol.Frame{} //使用frame协议
 	if c.ChannelPort > 65536 || c.ChannelPort < 1 {
 		fmt.Println("channel port mast between 1 and 65535")
 		c.WaitRun.Done()
@@ -68,14 +68,14 @@ func (c *Client) On(event string, callback func(data string)) {
 		c.subStatus[event] = false
 		return
 	}
-	if c.subStatus[event] == false{
+	if c.subStatus[event] == false {
 		c.subscribes(event)
 		c.subStatus[event] = true
 	}
 }
 
 //取消事件订阅并删除回调函数
-func (c *Client) Un(event string){
+func (c *Client) Un(event string) {
 	bus := BusData{"unsubscribe", event, ""}
 	jsonBytes, err := json.Marshal(bus)
 	if err != nil {
@@ -91,8 +91,8 @@ func (c *Client) Un(event string){
 		fmt.Println(err)
 		return
 	}
-	delete(c.callback,event)
-	delete(c.subStatus,event)
+	delete(c.callback, event)
+	delete(c.subStatus, event)
 }
 
 //发送订阅请求
@@ -151,7 +151,7 @@ func (c *Client) reconnect() {
 	c.status = 2
 RECONNECT:
 	fmt.Println("正在重新连接隧道")
-	time.Sleep(time.Second*5)//5s重连一次
+	time.Sleep(time.Second * 5) //5s重连一次
 	c.conn, err = net.Dial("tcp", fmt.Sprintf("%s:%d", c.ChannelAddr, c.ChannelPort))
 	if err != nil {
 		goto RECONNECT

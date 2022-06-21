@@ -2,7 +2,7 @@ package client
 
 import (
 	"fmt"
-	"github.com/yyzcoder/yyznet/protocol"
+	"github.com/yyzcode/yyznet/protocol"
 	"net"
 	"sync"
 )
@@ -21,7 +21,7 @@ type Tcp struct {
 var TcpWg sync.WaitGroup
 
 func (t *Tcp) Exec() {
-	if t.Protocol == nil{
+	if t.Protocol == nil {
 		t.Protocol = protocol.Tcp{}
 	}
 	var err error

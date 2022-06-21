@@ -3,8 +3,8 @@ package channel
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/yyzcoder/yyznet/protocol"
-	"github.com/yyzcoder/yyznet/server"
+	"github.com/yyzcode/yyznet/protocol"
+	"github.com/yyzcode/yyznet/server"
 	"sync"
 )
 

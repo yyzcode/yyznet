@@ -2,7 +2,7 @@ package server
 
 import (
 	"fmt"
-	"github.com/yyzcoder/yyznet/protocol"
+	"github.com/yyzcode/yyznet/protocol"
 	"net"
 )
 
